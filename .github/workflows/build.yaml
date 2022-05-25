@@ -39,27 +39,27 @@ jobs:
         echo "BUILD_VERSION=0.0.1-$hash-$date" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
       working-directory: ./vendor
 
-    - name: Cache Node Modules
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: |
-           ./vendor/node_modules
-           ./vendor/packages/desktop-electron/node_modules
-           ./vendor/packages/loot-core/node_modules
-           ./vendor/mobile/node_modules
-           ./vendor/import-ynab4/node_modules
-           ./vendor/api/node_modules
-           ./vendor/node-libofx/node_modules
-           ./vendor/loot-design/node_modules
-           ./vendor/desktop-client/node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-yarn-lock
+    # - name: Cache Node Modules
+    #   id: cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #        ./vendor/node_modules
+    #        ./vendor/packages/desktop-electron/node_modules
+    #        ./vendor/packages/loot-core/node_modules
+    #        ./vendor/mobile/node_modules
+    #        ./vendor/import-ynab4/node_modules
+    #        ./vendor/api/node_modules
+    #        ./vendor/node-libofx/node_modules
+    #        ./vendor/loot-design/node_modules
+    #        ./vendor/desktop-client/node_modules
+    #     key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-yarn-lock
 
     - name: Restore Actual
       shell: bash
       run: |
-        # TODO Double check if this unset is needed. Was used to bypass some hard fails by the patcher.
-        unset CI
+        # # TODO Double check if this unset is needed. Was used to bypass some hard fails by the patcher.
+        # unset CI
         yarn install --pure-lockfile
       working-directory: ./vendor
       if: steps.cache.outputs.cache-hit != 'true'
