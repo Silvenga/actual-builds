@@ -96,3 +96,14 @@ jobs:
         set -ex
         ./bin/package --release --version '${{ env.BUILD_VERSION }}'
       working-directory: ./vendor
+
+    - name: Publish (Artifacts)
+      uses: actions/upload-artifact@v3
+      with:
+        name: electron-${{ matrix.os }}
+        path: |
+          ./vendor/packages/desktop-electron/dist/*.AppImage
+          ./vendor/packages/desktop-electron/dist/*.exe
+          ./vendor/packages/desktop-electron/dist/*.exe.blockmap
+          ./vendor/packages/desktop-electron/dist/*.dmg
+          ./vendor/packages/desktop-electron/dist/*.dmg.blockmap
